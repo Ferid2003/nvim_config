@@ -18,6 +18,7 @@ return {
             { "<leader>g", group = "[G]it" },
             { "<leader>J", group = "[J]ava" },
             { "<leader>w", group = "[W]indow" },
+            { "<leader>M", group = "[M]aven" },
         })
     end
 }
