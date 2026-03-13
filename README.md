@@ -10,3 +10,6 @@
 9. typescript-language-server (ts_ls)
 
 Config is the copy of https://github.com/unknownkoder/Java-FullStack-NeoVim-Configuration with minor adjustments and fixes for new nvim versions.
+
+Desired plugins for future implementations:
+1. https://github.com/fedepujol/move.nvim

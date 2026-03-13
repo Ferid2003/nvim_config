@@ -14,7 +14,19 @@ return {
             -- set a vim motion to <Space> + f + g to search for files based on the text inside of them
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, {desc = "[F]ind by [G]rep"})
             -- set a vim motion to <Space> + f + d to search for Code Diagnostics in the current project
-            vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
+            vim.keymap.set('n', '<leader>fd', function ()
+                builtin.diagnostics(
+                    require('telescope.themes').get_dropdown({
+                        layout_strategy = 'vertical',
+                        layout_config = {
+                            width = 0.7,
+                            height = 0.7,
+                            preview_height = 0.3,
+                        },
+                        path_display = { "tail" },
+                    })
+                )
+            end, { desc = '[F]ind [D]iagnostics' })
             -- set a vim motion to <Space> + f + r to resume the previous search
             vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]inder [R]esume' })
             -- set a vim motion to <Space> + f + . to search for Recent Files
