@@ -28,3 +28,9 @@ vim.keymap.set("n", "<leader>wh", ":split<cr>", { desc = "[W]indow Split [H]oriz
 -- Stay in indent mode
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left in visual mode" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right in visual mode" })
+
+-- windows
+vim.keymap.set("n", "<leader><left>", ":vertical resize +20<cr>")
+vim.keymap.set("n", "<leader><right>", ":vertical resize -20<cr>")
+vim.keymap.set("n", "<leader><up>", ":resize +10<cr>")
+vim.keymap.set("n", "<leader><down>", ":resize -10<cr>")
