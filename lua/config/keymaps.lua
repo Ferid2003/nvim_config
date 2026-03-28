@@ -34,3 +34,7 @@ vim.keymap.set("n", "<leader><left>", ":vertical resize +20<cr>")
 vim.keymap.set("n", "<leader><right>", ":vertical resize -20<cr>")
 vim.keymap.set("n", "<leader><up>", ":resize +10<cr>")
 vim.keymap.set("n", "<leader><down>", ":resize -10<cr>")
+
+-- Make pasting ignore delete and cut command's and paste most recent yank
+vim.keymap.set("n", "p", '"0p')
+vim.keymap.set("n", "P", '"0P')

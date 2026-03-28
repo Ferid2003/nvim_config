@@ -28,6 +28,53 @@ return {
             -- Gain access to the function of the luasnip plugin
             local luasnip = require("luasnip")
 
+            -- Custom Spring boot properties completion soruce
+            local spring_source = {}
+
+            spring_source.new = function ()
+                return setmetatable({}, {__index = spring_source })
+            end
+
+            spring_source.is_available = function()
+                return vim.bo.filetype == "jproperties"
+            end
+
+            spring_source.get_trigger_characters = function()
+                return { "." }
+            end
+
+            spring_source.complete = function(self, request, callback)
+                local items = {
+                    { label = "spring.datasource.url", documentation = "JDBC URL of the database" },
+                    { label = "spring.datasource.username", documentation = "Login username of the database" },
+                    { label = "spring.datasource.password", documentation = "Login password of the database" },
+                    { label = "spring.datasource.driver-class-name", documentation = "Fully qualified name of the JDBC driver" },
+                    { label = "spring.jpa.hibernate.ddl-auto", documentation = "DDL mode: none, validate, update, create, create-drop" },
+                    { label = "spring.jpa.show-sql", documentation = "Whether to enable logging of SQL statements" },
+                    { label = "spring.jpa.properties.hibernate.dialect", documentation = "Hibernate dialect" },
+                    { label = "spring.jpa.properties.hibernate.format_sql", documentation = "Whether to format SQL output" },
+                    { label = "server.port", documentation = "Server HTTP port" },
+                    { label = "server.servlet.context-path", documentation = "Context path of the application" },
+                    { label = "spring.application.name", documentation = "Application name" },
+                    { label = "spring.profiles.active", documentation = "Active profiles" },
+                    { label = "spring.security.user.name", documentation = "Default user name" },
+                    { label = "spring.security.user.password", documentation = "Default user password" },
+                    { label = "logging.level.root", documentation = "Root log level: TRACE, DEBUG, INFO, WARN, ERROR" },
+                    { label = "logging.level.org.springframework", documentation = "Spring framework log level" },
+                    { label = "logging.file.name", documentation = "Log file name" },
+                    { label = "spring.cache.type", documentation = "Cache type to use" },
+                    { label = "spring.data.redis.host", documentation = "Redis server host" },
+                    { label = "spring.data.redis.port", documentation = "Redis server port" },
+                    { label = "spring.mail.host", documentation = "SMTP server host" },
+                    { label = "spring.mail.port", documentation = "SMTP server port" },
+                    { label = "spring.mail.username", documentation = "Login user of the SMTP server" },
+                    { label = "spring.mail.password", documentation = "Login password of the SMTP server" },
+                }
+                callback({ items = items, isIncomplete = false })
+            end
+
+            require("cmp").register_source("spring_properties", spring_source)
+
             -- Lazily load the vscode like snippets
             require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -45,7 +92,7 @@ return {
                     -- menuone: automatically select the first option of the menu
                     -- preview: automatically display the completion candiate as you navigate the menu
                     -- noselect: prevent neovim from automatically selecting a completion option while navigating the menu
-                    competeopt = "menu,menuone,preview",
+                    completeopt = "menu,menuone,preview",
                 },
                 -- setup snippet support based on the active lsp and the current text of the file
                 snippet = {
@@ -62,7 +109,7 @@ return {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     -- show completion suggestions
-                    ["<C-Space"] = cmp.mapping.complete(),
+                    ["<C-Space>"] = cmp.mapping.complete(),
                     -- close completion window
                     ["<C-e>"] = cmp.mapping.abort(),
                     -- confirm completion, only when you explicitly selected an option
@@ -92,6 +139,7 @@ return {
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
+                    { name = "spring_properties" },
                     { name = "buffer" },
                     { name = "path" },
                 }),
